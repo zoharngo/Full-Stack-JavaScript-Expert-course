@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+</head>
+
+<body>
+
+    <script>
+        function Shape(x = 2, y = 2, color = 'black') {
+            var _x = x;
+            var _y = y;
+            var _color = color;
+
+            this.getX = () => { return _x; };
+            this.getY = () => { return _y; };
+            this.setX = (p) => { _x = p; };
+            this.setY = (p) => { _y = p; };
+            this.setColor = (color) => { _color = color; };
+            this.getColor = () => { return _color };
+
+            this.calcDistance = function () {
+                return Math.sqrt((Math.pow(_x, 2) + Math.pow(_y, 2)));
+            };
+        }
+
+        Shape.prototype.toString = function () {
+            return `x = ${this.getX()} , y = ${this.getY()} , color = ${this.getColor()}`;
+        };
+
+        var circle = new Shape(16, 16, 'Yellow');
+        console.log('Circle: ', circle.toString());
+        console.log('Calc circle distance: ', circle.calcDistance());
+
+    </script>
+</body>
+
+</html>

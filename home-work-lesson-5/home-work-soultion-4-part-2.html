@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+</head>
+
+<body>
+
+    <script>
+
+        /*************************************************** Computer Class - Start *********************************************/
+        // Computer Class
+        class Computer {
+
+            //Computer C'tor 
+            constructor(cpuCache = 4, ram = 200, model = 'PW350V', price = 800, warranty = 0) {
+                try {
+                    this.cpuCache = cpuCache;
+                    this.ram = ram;
+                    this.model = model;
+                    this.price = price;
+                    this.warranty = warranty;
+
+                } catch (e) {
+                    console.warn(`Message: ${e}`);
+                }
+            }
+
+            // Getters & Setters
+            get cpuCache() {
+                return this._cpuCache;
+            }
+            set cpuCache(size) {
+                if (size && size >= 4 && size <= 16) {
+                    this._size = size;
+                } else {
+                    throw new Error('Cache size is not between the limit 4MB - 16MB');
+                }
+            }
+            get ram() {
+                return this._ram;
+            }
+            set ram(size) {
+                if (size && size >= 200 && size <= 3000) {
+                    this._size = size;
+                } else {
+                    throw new Error('Ram size is not between the limit 200MB - 3000MB');
+                }
+            }
+            get model() {
+                return this._model;
+            }
+            set model(model) {
+                if (model) {
+                    this._model = model;
+                } else {
+                    throw new Error('Model is ' + model);
+                }
+            }
+            get price() {
+                return this._price;
+            }
+            set price(price) {
+                if (price && price >= 800 && price <= 20000) {
+                    this._price = price;
+                } else {
+                    throw new Error('Price is not between the limit 800$ - 20000$');
+                }
+            }
+            get warranty() {
+                return this._warranty;
+            }
+            set warranty(time) {
+                if (!isNaN(time) && time >= 0 && time <= 5) {
+                    this._time = time;
+                } else {
+                    throw new Error('Warranty period is not between the limit of 5 - 0 years');
+                }
+            }
+
+            // Class public method's 
+
+            equipmentProposal() {
+                console.log('New JBL wireless headphones model 377FH in 150USD , 30% disscount.');
+            }
+
+            print() {
+                var type = this instanceof Laptop ? 'Laptop' : this instanceof Desktop ? 'Desktop' : 'Computer';
+                console.log(`${type}\n------`);
+                let output = '';
+                for (let att in this) {
+                    if (att !== 'equipmentProposal') {
+                        output += `${att}: ${this[att]} \n`;
+                    }
+                }
+                console.log(output);
+            }
+
+
+        }
+        /*************************************************** Computer Class - End *********************************************/
+
+
+
+        /*************************************************** Desktop Class - Start *********************************************/
+        // Desktop Class
+        class Desktop extends Computer {
+
+            //Computer C'tor 
+            constructor(cpuCache = 4, ram = 200, model = 'PW350V', price = 800, warranty = 0, isWirelessMouse = false, screenSize = 11) {
+                super(cpuCache, ram, model, price, warranty);
+                try {
+                    this.isWirelessMouse = isWirelessMouse;
+                    this.screenSize = screenSize;
+                } catch (e) {
+                    console.warn(`Message: ${e}`);
+                }
+            }
+
+            // Getters & Setters
+            get isWirelessMouse() {
+                return this._isWirelessMouse;
+            }
+
+            set isWirelessMouse(isWirelessMouse) {
+                this._isWirelessMouse = isWirelessMouse;
+            }
+
+            get screenSize() {
+                return this._screenSize;
+            }
+
+            set screenSize(size) {
+                if (size && size >= 11 && size <= 18) {
+                    this._size = size;
+                } else {
+                    throw new Error('Screen size is not between the limit 11Inch - 18Inch');
+                }
+            }
+
+            // Class public method's 
+
+            equipmentProposal() {
+                console.log('New desktop table up on sale 99$ insted of 200$');
+            }
+
+        }
+        /*************************************************** Desktop - End *********************************************/
+
+
+        /*************************************************** Laptop Class - Start *********************************************/
+        // Laptop Class
+        class Laptop extends Computer {
+
+            //Computer C'tor 
+            constructor(cpuCache = 4, ram = 200, model = 'PW350V', price = 800, warranty = 0, batteryTimeToLoad = 9, batteryPercentage = 20, isTouchScreen = false) {
+                super(cpuCache, ram, model, price, warranty);
+                try {
+                    this.batteryTimeToLoad = batteryTimeToLoad;
+                    this.batteryPercentage = batteryPercentage;
+                    this.isTouchScreen = isTouchScreen;
+                } catch (e) {
+                    console.warn(`Message: ${e}`);
+                }
+
+            }
+
+            // Getters & Setters
+            get batteryTimeToLoad() {
+                return this._batteryTimeToLoad;
+            }
+
+            set batteryTimeToLoad(time) {
+                if (time && time >= 1 && time <= 9) {
+                    this._batteryTimeToLoad = time;
+                } else {
+                    throw new Error('Buttary time to load is not between the limit of 1hr - 9hr');
+                }
+            }
+
+            get batteryPercentage() {
+                return this._batteryPercentage;
+            }
+
+            set batteryPercentage(percentage) {
+                if (percentage && percentage >= 0 && percentage <= 100) {
+                    this._batteryPercentage = percentage;
+                } else {
+                    throw new Error('Buttary time to load is not between the limit of 0 - 100 percentage ');
+                }
+            }
+
+            get batteryTimeToLoad() {
+                return this._batteryTimeToLoad;
+            }
+
+            set isTouchScreen(isTouchScreen) {
+                this._isTouchScreen = isTouchScreen;
+            }
+
+            get isTouchScreen() {
+                return this._isTouchScreen;
+            }
+
+            // Class public method's 
+            equipmentProposal() {
+                super.equipmentProposal();
+                console.log('New laptop bag in sale 30$ insted of 75$');
+            }
+
+            buttaryChargeCompleted() {
+                console.log('Battery is fully charged !!');
+            }
+
+        }
+        /*************************************************** Laptop - End *********************************************/
+
+
+        /*************************************************** Main - Start *********************************************/
+
+
+        function executeActions(comp) {
+            if (comp instanceof Laptop) {
+                comp.print();
+                comp.equipmentProposal();
+                comp.buttaryChargeCompleted();
+            
+            }
+            if (comp instanceof Desktop) {
+                comp.print();
+                comp.equipmentProposal();
+                
+            }
+        }
+
+        var computers = [];
+
+        for (let index = 0; index < 10; index++) {
+            if (index % 2 == 0) {
+                computers[index] = new Laptop();
+            } else {
+                computers[index] = new Desktop();
+            }
+        }
+
+        //console.log('Computers', computers);
+
+        computers.forEach(comp => {
+            executeActions(comp);
+            console.log(`\n`);
+        });
+
+        /*************************************************** Main - Start *********************************************/
+    </script>
+</body>
+
+</html>

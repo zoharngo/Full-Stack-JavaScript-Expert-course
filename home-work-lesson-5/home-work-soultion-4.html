@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+</head>
+
+<body>
+
+    <script>
+
+        /***** Shape - Start *************************************************************************/
+
+        //Shape - Base function constructor method.  
+        function Shape(x = 2, y = 2, color = 'black') {
+            // Vaildation Method 
+            var _validateNumber = (p) => {
+                if (isNaN(p)) {
+                    throw new Error(`'${p}' is not a number `).message;
+                } else {
+                    return p;
+                }
+            };
+
+            // Private attributes 
+            try {
+                var _x = _validateNumber(x);
+            }
+            catch (e) {
+                console.warn(e);
+                console.warn('x =', x);
+            }
+            try {
+                var _y = _validateNumber(y);
+            }
+            catch (e) {
+                console.warn(e);
+                console.warn('y =', y);
+            }
+
+            var _color = color;
+
+            // Setters 
+            this.setX = (p) => {
+                try {
+                    _x = _validateNumber(p);
+                }
+                catch (e) {
+                    console.error(e);
+                }
+            };
+            this.setY = (p) => {
+                try {
+                    _y = _validateNumber(p);
+                }
+                catch (e) {
+                    console.error('Message : ', e);
+                }
+            };
+            this.setColor = (color) => { _color = color; };
+
+            // getters
+            this.getX = () => { return _x; };
+            this.getY = () => { return _y; };
+            this.getColor = () => { return _color };
+
+        }
+
+        // Public Shape method to calculate cordinates distance .
+        // throw console error in case of undefinded cordiantes .
+        Shape.prototype.calcDistance = function () {
+            try {
+                if (this.getX() && this.getY()) {
+                    return Math.sqrt((Math.pow(this.getX(), 2) + Math.pow(this.getY(), 2)));
+                } else {
+                    throw new Error('One or more of cordinates is undefined');
+                }
+            } catch (e) {
+                console.error(e);
+                return NaN;
+            }
+
+        };
+
+        // Override to string 
+        Shape.prototype.toString = function () {
+            return `x = ${this.getX()} , y = ${this.getY()} , color = ${this.getColor()}`;
+        };
+
+
+        /***** Shape - End ****************************************************************************/
+
+
+
+        /***** Circle - Start *************************************************************************/
+
+        // Circle - Extend Base function cosntructor method.
+        function Circle(x = 2, y = 2, color = 'green', radius = 1) {
+            // Calling Super Shape c'tor to puplate cordiantes .
+            Shape.call(this, x, y, color);
+            var _validateNumber = (r) => {
+                if (isNaN(r)) {
+                    throw new Error(`'${r}' is not a number `);
+                } else {
+                    return r;
+                }
+            };
+
+            // new privare memeber Radius . invoke vlidation method from Shape base class before assigment. 
+            try {
+                var _radius = _validateNumber(radius);
+            } catch (e) {
+                console.warn(e);
+                console.warn('Radius =', y);
+            }
+
+            // Getter
+            this.getRadius = () => {
+                return _radius;
+            };
+
+            // Setter 
+            this.setRadius = (r) => {
+                try {
+                    _radius = _validateNumber(r);
+                } catch (e) {
+                    console.warn(e);
+                    console.warn('Radius =', r);
+                }
+            };
+        }
+
+        // Inherite Shape prototype .
+        Circle.prototype = Object.create(Shape.prototype);
+        // Pointing to new Circle c'tor after overriding it in line 103.
+        Circle.prototype.constructor = Circle;
+        // Override toString
+        Circle.prototype.toString = function () {
+            return Shape.prototype.toString.call(this) + `, radius = ${this.getRadius()}`;
+        };
+        // Static class member PI
+        Object.defineProperty(Circle, 'PI', {
+            value: 3.14,
+            writable: false,
+            enumerable: true,
+            configurable: false
+        })
+        // Public prototype getArea method . calculate and retrive area of the circle.
+        Circle.prototype.getArea = function () {
+            try {
+                var r = this.getRadius();
+                if (r) {
+                    return Circle.PI * Math.pow(r, 2);
+                } else {
+                    throw new Error(`Radius is ${r}`);
+                }
+            } catch (e) {
+                console.error(e);
+                return NaN;
+            }
+        };
+        // Public prototype getPerimeter method . calculate and retrive perimeter of the circle.
+        Circle.prototype.getPerimeter = function () {
+            try {
+                var r = this.getRadius();
+                if (r) {
+                    return 2 * Circle.PI * r;
+                } else {
+                    throw new Error(`Perimeter is ${r}`);
+                }
+            } catch (e) {
+                console.error(e);
+                return NaN;
+            }
+        };
+
+        /***** Circle - End *************************************************************************/
+
+
+
+
+        /***** Main - Start *************************************************************************/
+
+        // Initiate new Circle instance.
+        var circle = new Circle(1.4,2.7,'green', 5.4543);
+
+        console.log('Circle', circle.toString());
+        console.log('Distance =', circle.calcDistance());
+        console.log('Area =', circle.getArea());
+        console.log('Perimeter =', circle.getPerimeter());
+        console.log('PI =', Circle.PI);
+        
+
+    </script>
+</body>
+
+</html>

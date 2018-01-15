@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+</head>
+<script>
+
+    function checkTime(date) {
+        return new Promise((resolve, reject) => {
+            var seconds = date.getSeconds();
+            if (seconds % 2 == 0) {
+                resolve(`Operation succeeded ${seconds} is even !`);
+            } else {
+                reject(new Error(`Operation failed ${seconds} is odd !`));
+            }
+        });
+    }
+
+    (function findEvenSecond() {
+        checkTime(new Date()).then(m => console.log('Message :', m)).catch((e) => {
+            console.error(e);
+            setTimeout(findEvenSecond, 1000);
+        });
+    })();
+
+
+
+</script>
+
+<body>
+</body>
+
+</html>

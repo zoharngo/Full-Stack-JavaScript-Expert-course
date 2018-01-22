@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <script>
+
+        async function getCountryDetails(value) {
+
+            if (!(isNaN(parseInt(value)))) {
+
+                let response, countries;
+                const countriesURL = 'https://restcountries.eu/rest/v2/all?fields=name';
+
+                try {
+                    response = await fetch(countriesURL);
+                    countries = await response.json();
+
+                    if (!(countries && countries.length && countries.length > 0 && countries[value])) {
+                        throw new Error('countries data not valid !');
+                    }
+                } catch (e) {
+                    throw new Error(`${countriesURL} : ${e}`);
+                }
+
+                const countryDetailsURL = `https://restcountries.eu/rest/v2/name/${countries[value].name}?fullText=true`;
+
+                try {
+                    response = await fetch(countryDetailsURL);
+                    let countryDetails = (await response.json())[0];
+
+                    if (!(countryDetails && countryDetails.name && countryDetails.nativeName &&
+                        countryDetails.capital && countryDetails.population && countryDetails.flag)) {
+                        throw new Error('Country details data not valid !');
+                    } else {
+                        let countryDIV = document.createElement('DIV');
+                        countryDIV.innerHTML = `
+                        <br>
+                        <b>  Name </b> : ${countryDetails.name} <br>
+                        <b>  Native name </b>: ${countryDetails.nativeName} <br>
+                        <b>  Capital </b>: ${countryDetails.capital} <br>
+                        <b>  Population </b>: ${countryDetails.population} <br>
+                        <b>  Flag </b>: <img src=${countryDetails.flag} width=80 length=50 align = 'top'/>
+                        <br>`;
+                        document.getElementsByTagName('BODY')[0].appendChild(countryDIV);
+                    }
+                } catch (e) {
+                    throw new Error(`${countryDetailsURL} : ${e}`);
+                }
+            } else {
+                throw new Error(`invalid function paramter`);
+            }
+
+        };
+
+        function* createOption() {
+            for (let i = 1; i < 251; i++) {
+                let option = document.createElement('OPTION');
+                option.value = i;
+                option.text = i;
+                yield option;
+            }
+        }
+
+        let countrySelect = document.createElement('SELECT');
+        let optionGen = createOption();
+
+        for (let option = optionGen.next(); !option.done; option = optionGen.next()) {
+            countrySelect.add(option.value);
+        }
+
+        countrySelect.addEventListener('change', (e) => {
+            try {
+                getCountryDetails(e.currentTarget.value - 1);
+            }catch(e){
+                console.error(e);
+            }
+        });
+
+
+        window.onload = () => {
+            document.getElementsByTagName('BODY')[0].appendChild(countrySelect);
+        }
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

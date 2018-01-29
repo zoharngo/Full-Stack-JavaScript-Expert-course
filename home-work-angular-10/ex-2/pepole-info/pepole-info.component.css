@@ -1,0 +1,29 @@
+div{
+    margin: auto;
+    padding: 0;
+    width: 100%;
+    position: relative;
+    top: 20px;
+}
+
+div ol{
+    list-style: disc;
+    width: 60%;
+    float: right;
+}
+
+div ol li ul{
+    list-style: none;
+    display: block;
+    padding: 0;
+    margin-bottom: 2%;
+
+}
+
+div ol li ul li {
+   text-align: left;
+}
+
+div ol li ul li span{
+   font-weight: 900;
+ }

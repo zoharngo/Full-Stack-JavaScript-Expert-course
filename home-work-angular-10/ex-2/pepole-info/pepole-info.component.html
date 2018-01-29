@@ -1,0 +1,24 @@
+<div>
+  <ol *ngIf="pepoleInfoArr.length > 0">
+    <li *ngFor="let person of pepoleInfoArr">
+      <ul>
+        <li>
+          <span>Id Info: </span>
+          {{person.id}}
+        </li>
+        <li>
+          <span>Name Info: </span>
+          {{person.name}}
+        </li>
+        <li>
+          <span>Gender Info: </span>
+          {{person.gender}}
+        </li>
+        <li>
+          <span>Favorite Fruit Info: </span>
+          {{person.favoriteFruit}}
+        </li>
+      </ul>
+    </li>
+  </ol>
+</div>

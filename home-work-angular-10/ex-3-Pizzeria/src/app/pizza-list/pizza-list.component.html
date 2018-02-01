@@ -1,0 +1,30 @@
+<div class="wrapper" *ngIf="pizzaCollection?.length; else noOrders">
+  <h2>{{title}}</h2>
+
+  <ul class="list-header">
+    <li class="row">
+      <ul class="pizza">
+        <li>Diameter</li>
+        <li>Slices</li>
+        <li>Toppings</li>
+        <li>Price</li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul class="list">
+    <li class="row" *ngFor="let pizza of pizzaCollection">
+      <ul class="pizza">
+        <li>{{pizza.diameter | unit:'cm':'right'}}</li>
+        <li>{{pizza.slices}}</li>
+        <li>{{pizza.toppings}}</li>
+        <li>{{pizza.price | unit:'$':'left' }}</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+<ng-template #noOrders>
+  <div class="wrapper">
+    <p>No orders found !</p>
+  </div>
+</ng-template>

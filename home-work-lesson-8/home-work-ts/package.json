@@ -11,7 +11,7 @@
   "dependencies": {
     "@types/node": "^9.3.0",
     "@types/readline-sync": "^1.4.2",
-    "readline-sync": "^1.4.7",
+    "readline-sync": "^1.4.10",
     "require": "^2.4.20"
   }
 }
